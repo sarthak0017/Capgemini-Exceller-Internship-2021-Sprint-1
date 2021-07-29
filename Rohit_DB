@@ -1,0 +1,93 @@
+USER Table-
+----------------------
+
+CREATE table "USERS" (
+    "USERNAME"   VARCHAR2(20) NOT NULL,
+    "PASSWORD"   VARCHAR2(20) NOT NULL,
+    "ROLE"       VARCHAR2(20) NOT NULL,
+    "EMAIL"      VARCHAR2(20) NOT NULL
+);
+
+DATA-
+----------------------------
+insert into USERS values('Rohit@Roy','rohitroy77','Admin','roy@abc.com');
+insert into USERS values('Sarthak@Sengupta','sarthakS09','Admin','ssengupta@dbh.com');
+insert into USERS values('Rahul@Roy','rahulpro','Customer','rahulRR@xyz.com');
+
+
+ADDRESS Table:-
+----------------------
+
+CREATE table "ADDRESS" (
+    "ADDID"        NUMBER(10) NOT NULL,
+    "STREETNO"     VARCHAR2(3) NOT NULL,
+    "BUILDINGNAME" VARCHAR2(20) NOT NULL,
+    "CITY"         VARCHAR2(10) NOT NULL,
+    "STATE"        VARCHAR2(10) NOT NULL,
+    "COUNTRY"      VARCHAR2(10) NOT NULL,
+    "PINCODE"      VARCHAR2(10) NOT NULL,
+    "CUSTID"       NUMBER(10) NOT NULL,
+    constraint  "ADDRESS_PK" primary key ("ADDID")
+);
+/
+
+CREATE sequence "ADDRESS_SEQ" 
+/
+
+CREATE trigger "BI_ADDRESS"  
+  before insert on "ADDRESS"              
+  for each row 
+begin  
+  if :NEW."ADDID" is null then
+    select "ADDRESS_SEQ".nextval into :NEW."ADDID" from dual;
+  end if;
+end;
+
+
+DATA:-
+--------
+
+insert into ADDRESS values(500,'22','Mohan Villa','Kolkata','Bengal,'India','700010',101);
+insert into ADDRESS values(501,'44','Astha Kunj','Noida','Delhi,'India','400890',102);
+insert into ADDRESS values(503,'35A','Gopinath','Patna','Bihar','India','670065',103);
+
+
+
+--------------------------------------------------------------------
+
+
+CUSTOMER Table:-
+------------------------------
+
+
+CREATE table "CUSTOMER" (
+    "CUSTID"     NUMBER(10) NOT NULL,
+    "FIRSTNAME"  VARCHAR2(15) NOT NULL,
+    "LASTNAME"   VARCHAR2(15) NOT NULL,
+    "MOBILENO"   NUMBER(10) NOT NULL,
+    "STATUS"	 VARCHAR2(15) NOT NULL,
+    constraint  "CUSTOMER_PK" primary key ("CUSTID")
+)
+/
+
+CREATE sequence "CUSTOMER_SEQ" 
+/
+
+CREATE trigger "BI_CUSTOMER"  
+  before insert on "CUSTOMER"              
+  for each row 
+begin  
+  if :NEW."CUSTID" is null then
+    select "CUSTOMER_SEQ".nextval into :NEW."CUSTID" from dual;
+  end if;
+end;
+/   
+
+
+
+DATA:-
+-------------------------
+
+insert into CUSTOMER values (101,'Rohit','Roy',9876543210,'Active');
+insert into CUSTOMER values (102,'Sarthak','Sengupta',9876543210,'Not Active');
+insert into CUSTOMER values (103,'Rahul','Roy',8765941123,'Not Active');
